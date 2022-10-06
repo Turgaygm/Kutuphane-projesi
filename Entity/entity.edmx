@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="KutuphaneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="kategori">
+          <Key>
+            <PropertyRef Name="kategori_id" />
+          </Key>
+          <Property Name="kategori_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kategori_ad" Type="varchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="kitapalma">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="a_adsoyad" Type="varchar" MaxLength="100" />
+          <Property Name="a_tarih" Type="smalldatetime" />
+          <Property Name="a_kitapadı" Type="varchar" MaxLength="100" />
+          <Property Name="a_telefon" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="kitaplar">
+          <Key>
+            <PropertyRef Name="k_id" />
+          </Key>
+          <Property Name="k_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="k_ad" Type="varchar" MaxLength="50" />
+          <Property Name="k_kategori" Type="int" />
+          <Property Name="k_yazar" Type="varchar" MaxLength="100" />
+          <Property Name="k_durum" Type="varchar" MaxLength="50" />
+          <Property Name="k_resim" Type="image" />
+          <Property Name="k_ozet" Type="text" />
+          <Property Name="k_sayfa" Type="int" />
+        </EntityType>
+        <EntityType Name="kullanicig">
+          <Key>
+            <PropertyRef Name="K_id" />
+          </Key>
+          <Property Name="K_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="K_kadı" Type="varchar" MaxLength="100" />
+          <Property Name="K_kparola" Type="varchar" MaxLength="50" />
+          <Property Name="K_Adsoyad" Type="varchar" MaxLength="50" />
+          <Property Name="K_Telefon" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="yonetici">
+          <Key>
+            <PropertyRef Name="Y_id" />
+          </Key>
+          <Property Name="Y_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Y_Adı" Type="varchar" MaxLength="50" />
+          <Property Name="Y_Parola" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_kitaplar_kategori">
+          <End Role="kategori" Type="Self.kategori" Multiplicity="0..1" />
+          <End Role="kitaplar" Type="Self.kitaplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kategori">
+              <PropertyRef Name="kategori_id" />
+            </Principal>
+            <Dependent Role="kitaplar">
+              <PropertyRef Name="k_kategori" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KutuphaneModelStoreContainer">
+          <EntitySet Name="kategori" EntityType="Self.kategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="kitapalma" EntityType="Self.kitapalma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="kitaplar" EntityType="Self.kitaplar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="kullanicig" EntityType="Self.kullanicig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="yonetici" EntityType="Self.yonetici" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_kitaplar_kategori" Association="Self.FK_kitaplar_kategori">
+            <End Role="kategori" EntitySet="kategori" />
+            <End Role="kitaplar" EntitySet="kitaplar" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KutuphaneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="kategori">
+          <Key>
+            <PropertyRef Name="kategori_id" />
+          </Key>
+          <Property Name="kategori_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kategori_ad" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="kitaplars" Relationship="Self.FK_kitaplar_kategori" FromRole="kategori" ToRole="kitaplar" />
+        </EntityType>
+        <EntityType Name="kitapalma">
+          <Key>
+            <PropertyRef Name="a_id" />
+          </Key>
+          <Property Name="a_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="a_adsoyad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="a_tarih" Type="DateTime" Precision="0" />
+          <Property Name="a_kitapadı" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="a_telefon" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="kitaplar">
+          <Key>
+            <PropertyRef Name="k_id" />
+          </Key>
+          <Property Name="k_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="k_ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="k_kategori" Type="Int32" />
+          <Property Name="k_yazar" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="k_durum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="k_resim" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="k_ozet" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="k_sayfa" Type="Int32" />
+          <NavigationProperty Name="kategori" Relationship="Self.FK_kitaplar_kategori" FromRole="kitaplar" ToRole="kategori" />
+        </EntityType>
+        <EntityType Name="kullanicig">
+          <Key>
+            <PropertyRef Name="K_id" />
+          </Key>
+          <Property Name="K_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="K_kadı" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="K_kparola" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="K_Adsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="K_Telefon" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="yonetici">
+          <Key>
+            <PropertyRef Name="Y_id" />
+          </Key>
+          <Property Name="Y_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Y_Adı" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Y_Parola" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_kitaplar_kategori">
+          <End Role="kategori" Type="Self.kategori" Multiplicity="0..1" />
+          <End Role="kitaplar" Type="Self.kitaplar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="kategori">
+              <PropertyRef Name="kategori_id" />
+            </Principal>
+            <Dependent Role="kitaplar">
+              <PropertyRef Name="k_kategori" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KutuphaneEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="kategoris" EntityType="Self.kategori" />
+          <EntitySet Name="kitapalmas" EntityType="Self.kitapalma" />
+          <EntitySet Name="kitaplars" EntityType="Self.kitaplar" />
+          <EntitySet Name="kullanicigs" EntityType="Self.kullanicig" />
+          <EntitySet Name="yoneticis" EntityType="Self.yonetici" />
+          <AssociationSet Name="FK_kitaplar_kategori" Association="Self.FK_kitaplar_kategori">
+            <End Role="kategori" EntitySet="kategoris" />
+            <End Role="kitaplar" EntitySet="kitaplars" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KutuphaneModelStoreContainer" CdmEntityContainer="KutuphaneEntities3">
+          <EntitySetMapping Name="kategoris">
+            <EntityTypeMapping TypeName="KutuphaneModel.kategori">
+              <MappingFragment StoreEntitySet="kategori">
+                <ScalarProperty Name="kategori_id" ColumnName="kategori_id" />
+                <ScalarProperty Name="kategori_ad" ColumnName="kategori_ad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kitapalmas">
+            <EntityTypeMapping TypeName="KutuphaneModel.kitapalma">
+              <MappingFragment StoreEntitySet="kitapalma">
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="a_adsoyad" ColumnName="a_adsoyad" />
+                <ScalarProperty Name="a_tarih" ColumnName="a_tarih" />
+                <ScalarProperty Name="a_kitapadı" ColumnName="a_kitapadı" />
+                <ScalarProperty Name="a_telefon" ColumnName="a_telefon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kitaplars">
+            <EntityTypeMapping TypeName="KutuphaneModel.kitaplar">
+              <MappingFragment StoreEntitySet="kitaplar">
+                <ScalarProperty Name="k_id" ColumnName="k_id" />
+                <ScalarProperty Name="k_ad" ColumnName="k_ad" />
+                <ScalarProperty Name="k_kategori" ColumnName="k_kategori" />
+                <ScalarProperty Name="k_yazar" ColumnName="k_yazar" />
+                <ScalarProperty Name="k_durum" ColumnName="k_durum" />
+                <ScalarProperty Name="k_resim" ColumnName="k_resim" />
+                <ScalarProperty Name="k_ozet" ColumnName="k_ozet" />
+                <ScalarProperty Name="k_sayfa" ColumnName="k_sayfa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="kullanicigs">
+            <EntityTypeMapping TypeName="KutuphaneModel.kullanicig">
+              <MappingFragment StoreEntitySet="kullanicig">
+                <ScalarProperty Name="K_id" ColumnName="K_id" />
+                <ScalarProperty Name="K_kadı" ColumnName="K_kadı" />
+                <ScalarProperty Name="K_kparola" ColumnName="K_kparola" />
+                <ScalarProperty Name="K_Adsoyad" ColumnName="K_Adsoyad" />
+                <ScalarProperty Name="K_Telefon" ColumnName="K_Telefon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="yoneticis">
+            <EntityTypeMapping TypeName="KutuphaneModel.yonetici">
+              <MappingFragment StoreEntitySet="yonetici">
+                <ScalarProperty Name="Y_id" ColumnName="Y_id" />
+                <ScalarProperty Name="Y_Adı" ColumnName="Y_Adı" />
+                <ScalarProperty Name="Y_Parola" ColumnName="Y_Parola" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
